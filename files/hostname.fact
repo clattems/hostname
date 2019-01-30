@@ -1,0 +1,12 @@
+#!/bin/bash
+interface=$(/sbin/ip link show up|grep "state UP"|/usr/bin/awk '{ print $2 }'|/usr/bin/awk -F: '{ print $1 }')
+ipaddr=$(/sbin/ip addr show "${interface}"|grep inet|grep "${interface}"|/usr/bin/awk '{ print $2 }'|/usr/bin/awk -F'/' '{ print $1 }')
+octet="$(echo "${ipaddr}"|/usr/bin/awk -F\. '{ print $4 }')"
+newname="node-600-$(printf "%03d\n" "${octet}")"
+cat <<EOF
+{
+    "newname" : "$newname"
+}
+EOF
+#/usr/bin/sed -i "s/^HOSTNAME=.*/HOSTNAME=${newname}/g" /etc/hostname
+

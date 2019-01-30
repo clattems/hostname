@@ -1,0 +1,19 @@
+---
+- hosts: database
+  tasks: 
+
+    - name: "Create custom fact directory"
+      file:
+        path: "/etc/ansible/facts.d"
+        state: "directory"
+
+
+    - name: "Insert custom fact file"
+      copy:
+        src: files/hostname.fact
+        dest: /etc/ansible/facts.d/hostname.fact
+        mode: 0775
+ 
+    - name: set the hostname of server
+      hostname:
+        name: "{{ ansible_local.hostname.newname }}" 

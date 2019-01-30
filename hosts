@@ -1,0 +1,15 @@
+[all]
+tower01.openshift.wwtatc.local
+tower02.openshift.wwtatc.local
+tower03.openshift.wwtatc.local
+
+[all:vars]
+ansible_ssh_user=ansible
+ansible_become=true
+
+[database]
+db01.openshift.wwtatc.local pgsqlrep_role=master
+
+[database_replica]
+db02.openshift.wwtatc.local pgsqlrep_role=replica
+
